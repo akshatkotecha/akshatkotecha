@@ -1,33 +1,35 @@
 <h1 align="center">Akshat Kotecha</h1>
 
 <p align="center">
-  <strong>Data analyst · AI/ML engineer</strong><br>
-  I turn messy source data into answers people can act on — and into retrieval
-  systems that know when they don't have one.
+  <strong>AI/ML engineer · competitive programmer</strong><br>
+  I build retrieval and LLM systems that know when they don't have an answer —
+  and I solve algorithm problems in Java for the same reason I like those
+  systems: the constraints are the interesting part.
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/SQL%20Server-CC2927?style=flat-square&logo=microsoftsqlserver&logoColor=white" alt="SQL Server">
-  <img src="https://img.shields.io/badge/Plotly%20Dash-3F4F75?style=flat-square&logo=plotly&logoColor=white" alt="Plotly Dash">
-  <img src="https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white" alt="pandas">
+  <img src="https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white" alt="Java">
   <img src="https://img.shields.io/badge/LangChain-1C3C3C?style=flat-square&logo=langchain&logoColor=white" alt="LangChain">
   <img src="https://img.shields.io/badge/FAISS-0467DF?style=flat-square&logo=meta&logoColor=white" alt="FAISS">
-  <img src="https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white" alt="Java">
+  <img src="https://img.shields.io/badge/Ollama-000000?style=flat-square&logo=ollama&logoColor=white" alt="Ollama">
+  <img src="https://img.shields.io/badge/SQL%20Server-CC2927?style=flat-square&logo=microsoftsqlserver&logoColor=white" alt="SQL Server">
+  <img src="https://img.shields.io/badge/Codeforces-1F8ACB?style=flat-square&logo=codeforces&logoColor=white" alt="Codeforces">
 </p>
 
 ---
 
-Two halves of the same job, and I work on both ends of it.
+Two threads, and they feed each other.
 
-**The analysis:** getting to a defensible number — schema and view design, the
-statistics behind a comparison, and being explicit about what the data cannot
-support. A finding without its evidence attached isn't finished.
+**Building AI systems.** RAG pipelines, LLM routing, and the extraction plumbing
+underneath them. The rule I keep coming back to: **the model routes, it doesn't
+invent.** Where a value can be looked up it gets looked up, and the model's job
+is to decide *which* lookup — never to produce the number itself. A model that
+can't hallucinate an answer is worth more than one that's usually right.
 
-**The engineering:** extraction pipelines, RAG, and LLM plumbing where the model
-is one component rather than the whole answer. A rule that runs through most of
-it — **the model routes, it doesn't invent.** Where a number can be looked up,
-it gets looked up.
+**Competitive programming.** 335 Java solutions across 224 Codeforces contests,
+plus a LeetCode set. It's where the instinct for complexity bounds and edge cases
+comes from — the same instinct that decides whether a retrieval fallback is safe.
 
 ---
 
@@ -35,47 +37,64 @@ it gets looked up.
 
 ### 🏥 [Health Insurance Competitive Intelligence](https://github.com/akshatkotecha/insurance-competitive-analysis)
 
-Built during an internship. End-to-end competitive analysis of eight Indian
-health insurers — scraped from their own published PDFs, parsed into SQL Server,
-and surfaced through a BI dashboard and two chatbots. **3,063 PDF pages in,
-8,492 priced segments out.**
+Built during an internship. A full pipeline from eight insurers' published PDFs
+to a queryable system — **3,063 PDF pages in, 8,492 structured rows out** —
+fronted by two chatbots and a BI dashboard.
 
-**What the analysis found**
+**The retrieval architecture is the interesting part.**
 
-- The focal insurer's price advantage **runs out at 66+** — the price index
-  crosses 100 between the 56-65 and 66+ bands, after undercutting the market
-  everywhere below it.
-- It **doesn't compete at the entry price point.** Its cheapest cover is ₹7 L;
-  all six competitors with rate data sell from ₹5 L, so a shopper starting at
-  the lowest cover never sees its quote.
-- One rival **undercuts it in 81% of shared segments** — more than triple the
-  next closest competitor.
-- **22% of that rival's rate table is corrupt**, caught by the pipeline rather
-  than by eye: 195 rows sitting below a quarter of their own slab's median.
+- **Three-tier routing where the LLM never writes the answer.** Regex matched
+  against live database contents first, keyword routing second, and the model
+  only when both fail — returning a JSON route
+  (`{"intent": "metric", "company": "ABHI", "year": 2023}`), never prose. That
+  route feeds the same parameterised queries as tier 1, so a wrong model output
+  produces a clarifying question rather than a wrong number.
+- **SQL runs before retrieval, deliberately.** SQL returning zero rows is an
+  unambiguous "not in the database", so falling back to vector search is safe.
+  Retrieval has no such signal — it always returns its nearest chunks however
+  irrelevant, so it can never tell you it failed. The reliable source goes first.
+- **Two chatbots, same core.** A SQL-only bot that cannot hallucinate by
+  construction, and a SQL+RAG bot that adds FAISS retrieval over brochure text
+  with a local model (Ollama) for questions that only live in policy prose.
+- **Extraction that survives real websites.** Tiered downloading — plain HTTP, a
+  headless-Chrome fetch that defeats WAF fingerprinting, then Selenium — and a
+  different parsing strategy per insurer: ruled tables, word-coordinate
+  reconstruction, and Tesseract OCR for the one rate chart published as an image.
+- **The pipeline audits itself.** It flagged 195 corrupt rate rows in a
+  competitor's table — 22% of it — by comparing each row against its own slab's
+  median rather than an absolute threshold.
 
-**How it's built**
+`Python` · `LangChain` · `FAISS` · `Ollama` · `Groq` · `SQL Server` · `Tesseract` · `Dash`
 
-- An **18-view SQL layer** carries the analytical logic — price indexing, peer
-  ranking, CAGR, data-quality checks. Python reads views, never base tables, so
-  the analysis is versioned SQL rather than pandas scattered across scripts.
-- An **insight engine, not a chart wall.** Eight functions compute findings and
-  return them as structured objects with the evidence rows attached; every claim
-  on screen is one click from the data underneath it.
-- **Reliability is enforced, not assumed.** Comparisons drawn against fewer than
-  four competitors are greyed, labelled with their sample size, and excluded from
-  every headline figure.
-- **Tiered extraction:** plain HTTP → a headless-Chrome fetch that defeats WAF
-  fingerprinting → Selenium, then a different parsing strategy per insurer —
-  ruled tables, word-coordinate reconstruction, and Tesseract OCR for the one
-  rate chart published as an image.
-- **A chatbot where the LLM never writes the answer.** Regex against live
-  database contents first, keyword routing second, the model only when both fail
-  — returning a JSON route, never prose. A wrong model output produces a
-  clarifying question, not a wrong premium. SQL runs before retrieval on purpose:
-  zero rows is an unambiguous "not here", while retrieval always returns its
-  nearest chunks however irrelevant, so it can never tell you it failed.
+### ⚔️ Competitive programming — [CP](https://github.com/akshatkotecha/CP) · [DSA](https://github.com/akshatkotecha/DSA)
 
-`Python` · `SQL Server` · `Dash/Plotly` · `Streamlit` · `LangChain` · `FAISS` · `Ollama` · `Tesseract`
+**335 Java solutions across 224 Codeforces contests**, each with its own
+write-up, plus a LeetCode set covering dynamic programming, binary trees,
+strings and greedy algorithms.
+
+Kept as a worked archive rather than a dump — every problem folder carries the
+solution and a README, so the reasoning is recoverable later, not just the
+accepted code.
+
+`Java` · `algorithms` · `data structures` · `complexity analysis`
+
+### 🧠 [Synapse Quest](https://github.com/akshatkotecha/synapse-quest-ai)
+
+AI-driven developer productivity platform: task routing based on expertise
+inferred from Git telemetry, plus behavioural analytics and a REST API for
+engineering teams. Started at a hackathon, extended afterwards.
+
+`JavaScript` · `Git telemetry` · `REST API`
+
+### ⌚ [Second Movement Watch Scraper](https://github.com/akshatkotecha/sm-watch-scraper)
+
+A self-updating catalogue scraper that builds price history over time rather
+than overwriting it. Three fetch strategies cheapest-first — `curl_cffi`
+mimicking Chrome's TLS fingerprint, plain `requests`, then Playwright only where
+JS rendering is genuinely required — with `schema.org` extraction, caching, and
+resumable runs.
+
+`Python` · `Playwright` · `curl_cffi`
 
 ### 📈 [NIFTY Options Pricing Model](https://github.com/akshatkotecha/nifty-options-pricing-model)
 
@@ -84,44 +103,17 @@ payoff modelling, and backtested option strategies.
 
 `Python` · `NumPy` · `quantitative finance`
 
-### ⌚ [Second Movement Watch Scraper](https://github.com/akshatkotecha/sm-watch-scraper)
-
-A self-updating catalogue scraper that tracks every pre-owned watch on a
-retailer's site, building price history over time rather than overwriting it.
-
-- Three fetch strategies, cheapest first: `curl_cffi` mimicking Chrome's TLS
-  fingerprint, plain `requests`, then Playwright only where JS rendering is
-  genuinely required.
-- Reads `schema.org` JSON-LD plus the on-page spec table, with a regex prose
-  fallback for fields the table omits.
-- Incremental and resumable — caches parsed products, saves every 20 pages, and
-  resumes cleanly after an interrupted run.
-
-`Python` · `Playwright` · `curl_cffi` · `openpyxl`
-
-### 🧠 [Synapse Quest](https://github.com/akshatkotecha/synapse-quest-ai)
-
-Developer productivity analytics from Git telemetry, with AI-driven task routing
-based on inferred developer expertise. Started at a hackathon, extended
-afterwards with deeper analytics and a REST API.
-
-`JavaScript` · `Git telemetry` · `REST API`
-
 ---
 
 ## What I work with
 
 | | |
 |---|---|
-| **Analytics & BI** | SQL Server schema and view design, window functions, Plotly Dash, Power BI, Streamlit, accessible chart design with CVD-validated palettes |
-| **AI / ML** | RAG pipelines, FAISS, LangChain, Ollama, Groq, embedding models, prompt-as-router design |
-| **Data engineering** | ETL orchestration, pandas, idempotent pipelines, data-quality instrumentation |
+| **AI / ML** | RAG pipelines, FAISS, LangChain, Ollama, Groq, embedding models, prompt-as-router design, deterministic-first fallback chains |
+| **Algorithms** | Data structures, dynamic programming, graphs, greedy, complexity analysis — in Java |
+| **Data & backend** | SQL Server schema and view design, pandas, ETL orchestration, idempotent pipelines |
 | **Extraction** | pdfplumber, PyMuPDF, Tesseract OCR, Selenium, Playwright, resilient tiered scraping |
-| **Languages** | Python, SQL, Java, JavaScript |
-
-Also: data structures and competitive programming in Java — see
-[DSA](https://github.com/akshatkotecha/DSA) and
-[CP](https://github.com/akshatkotecha/CP).
+| **Languages** | Python, Java, SQL, JavaScript |
 
 ---
 
