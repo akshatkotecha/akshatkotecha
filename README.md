@@ -109,6 +109,9 @@ payoff modelling and backtested strategies.
 ---
 
 <p align="center">
+  <a href="https://www.linkedin.com/in/akshat-kotecha-a3b4341ba/">
+    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn">
+  </a>
   <a href="mailto:akshatkotecha@gmail.com">
     <img src="https://img.shields.io/badge/Email-akshatkotecha@gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white" alt="Email">
   </a>
