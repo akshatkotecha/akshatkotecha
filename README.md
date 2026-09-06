@@ -109,7 +109,7 @@ two chatbots and a BI dashboard.
 </details>
 
 <details>
-<summary><b>🧠 Synapse Quest</b> — AI-powered developer productivity platform</summary>
+<summary><b>🛡️ Sentinel</b> — Developer productivity platform: code scoring, Git-telemetry behaviour signals, skill-based task routing</summary>
 
 <br>
 
@@ -119,7 +119,7 @@ tickets from those profiles rather than distributing them uniformly.
 
 `React.js` · `Python (Flask)` · `TailwindCSS` · `Git integration`
 
-**[→ Repository](https://github.com/akshatkotecha/synapse-quest-ai)**
+**[→ Repository](https://github.com/akshatkotecha/sentinel)**
 
 </details>
 
