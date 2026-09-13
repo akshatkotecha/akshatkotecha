@@ -76,6 +76,36 @@ akshat@github:~$ whoami --verbose
 ## Featured Projects
 
 <details open>
+<summary><b>🚦 Gatekeeper</b> — model-cascading RAG assistant with a fine-tuned router and self-verifying code execution &nbsp;·&nbsp; 🚧 in progress</summary>
+
+<br>
+
+Currently building — an AI documentation assistant (FastAPI + LangGraph docs)
+that applies the same rule as everything else here: a small model decides,
+a large model only runs when the decision actually calls for it.
+
+- **A fine-tuned classifier gates every call to the big model.** A LoRA-tuned
+  Qwen2.5 router picks which knowledge base to search and whether the question
+  is cheap enough to skip escalation — model cascading applied to LLM cost and
+  latency, the same routing instinct as the insurance project applied to a
+  different bottleneck.
+- **Code isn't trusted for looking right.** When an answer includes a snippet,
+  a sandboxed executor actually runs it and feeds failures back into a retry
+  loop before anything reaches the user.
+- **An explicit graph, not a prompt chain.** Retrieval, routing, generation and
+  verification are separate LangGraph nodes with real branching, so a failed
+  check loops back instead of silently shipping a bad answer.
+- **Benchmarked, not eyeballed.** A golden eval set scores accuracy plus
+  p50/p95 latency and cost for the full pipeline against a naive
+  single-model baseline.
+
+`Python` · `LangGraph` · `Chroma` · `Groq` · `LoRA fine-tuning` · `FastAPI` · `Plotly Dash`
+
+**[→ Repository](https://github.com/akshatkotecha/gatekeeper)**
+
+</details>
+
+<details>
 <summary><b>🏥 Health Insurance Competitive Intelligence</b> — SQL + RAG query system over 8 insurers</summary>
 
 <br>
@@ -198,7 +228,7 @@ accepted code, not just the submission.
 
 ```yaml
 learning:  [ agentic workflows, vector database internals, model evaluation ]
-building:  [ retrieval systems where the model routes and never invents ]
+building:  [ Gatekeeper — fine-tuned router + LangGraph agent + self-verifying code exec ]
 grinding:  [ Codeforces rated contests, LeetCode dailies ]
 open_to:   [ AI/ML engineering internships and roles ]
 reach_me:  akshatkotecha@gmail.com
