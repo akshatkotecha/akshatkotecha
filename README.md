@@ -4,14 +4,14 @@
 <!-- ══════════════ TYPING + LINKS ══════════════ -->
 <p align="center">
   <a href="https://github.com/akshatkotecha">
-    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=3200&pause=900&color=6366F1&center=true&vCenter=true&width=620&lines=The+model+routes%2C+it+doesn't+invent.;RAG+pipelines+that+know+when+they've+failed.;850%2B+problems+solved+%E2%80%94+top+0.3%25+on+LeetCode.;B.Tech+CE+%40+DJ+Sanghvi+%7C+CGPA+9.13" alt="Typing SVG"/>
+    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=3200&pause=900&color=6366F1&center=true&vCenter=true&width=620&lines=The+model+routes%2C+it+doesn't+invent.;RAG+pipelines+that+know+when+they've+failed.;850%2B+problems+solved+%E2%80%94+top+0.2%25+on+LeetCode.;B.Tech+CE+%40+DJ+Sanghvi+%7C+CGPA+9.13" alt="Typing SVG"/>
   </a>
 </p>
 
 <p align="center">
   <a href="https://www.linkedin.com/in/akshat-kotecha-a3b4341ba/"><img src="https://img.shields.io/badge/LinkedIn-4F46E5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/></a>
   <a href="mailto:akshatkotecha@gmail.com"><img src="https://img.shields.io/badge/Email-4F46E5?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"/></a>
-  <a href="https://leetcode.com/"><img src="https://img.shields.io/badge/LeetCode-Top%200.3%25-4F46E5?style=for-the-badge&logo=leetcode&logoColor=white" alt="LeetCode"/></a>
+  <a href="https://leetcode.com/"><img src="https://img.shields.io/badge/LeetCode-Top%200.2%25-4F46E5?style=for-the-badge&logo=leetcode&logoColor=white" alt="LeetCode"/></a>
   <a href="https://codeforces.com/"><img src="https://img.shields.io/badge/Codeforces-Specialist-4F46E5?style=for-the-badge&logo=codeforces&logoColor=white" alt="Codeforces"/></a>
   <a href="https://www.codechef.com/"><img src="https://img.shields.io/badge/CodeChef-3%E2%98%85-4F46E5?style=for-the-badge&logo=codechef&logoColor=white" alt="CodeChef"/></a>
 </p>
@@ -205,7 +205,7 @@ backtested option strategies.
 
 | Platform | Standing |
 |---|---|
-| **LeetCode** | **Top 0.3% globally** — 850+ algorithmic problems solved |
+| **LeetCode** | **Top 0.2% globally** — 850+ algorithmic problems solved |
 | **CodeChef** | **Top 5% in India** — 3★, maximum rating 1636 |
 | **Codeforces** | Maximum rating **1418 (Specialist)** across consistent rated participation |
 | **Code Uncode 2026** | **Rank 60** nationally |
